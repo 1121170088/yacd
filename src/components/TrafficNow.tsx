@@ -135,7 +135,7 @@ function useSpeed(apiConfig) {
     useEffect(() => {
         return fetchData(apiConfig).subscribe((o) => {
 
-            Object.keys(o).map((k, i) => {
+            Object.keys(o).map((k) => {
                 let item = o[k];
                 item.upStr = prettyBytes(item.up) + '/s';
                 item.downStr = prettyBytes(item.down) + '/s';
@@ -168,14 +168,13 @@ function useConnection(apiConfig) {
     const read = useCallback(
         (o) => {
 
-            Object.keys(o).map((k, i) => {
+            Object.keys(o).map((k) => {
                 let item = o[k];
                 item.upTotal = prettyBytes(item.uploadTotal),
                     item.dlTotal = prettyBytes(item.downloadTotal),
                     item.connNumber = item.connections.length
             });
 
-            console.log(o)
             setState(o);
         },
         [setState]

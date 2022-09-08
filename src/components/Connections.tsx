@@ -136,7 +136,7 @@ function Conn({ apiConfig }) {
     (o) => {
         // console.log(o)
         let connections =[]
-        Object.keys(o).map((k, i) => {
+        Object.keys(o).map((k) => {
             let item = o[k];
             connections.push(...item.connections)
         });

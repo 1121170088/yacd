@@ -8,7 +8,7 @@ import useLineChart from '../hooks/useLineChart';
 import { chartJSResource, chartStyles, commonDataSetProps } from '../misc/chart';
 import { getClashAPIConfig, getSelectedChartStyleIndex } from '../store/app';
 import { connect } from './StateProvider';
-import {appendLog} from "$src/store/logs";
+// import {appendLog} from "$src/store/logs";
 
 const { useMemo } = React;
 

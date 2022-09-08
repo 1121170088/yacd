@@ -17,7 +17,7 @@ const traffic = {
   subscribers: [],
   appendData(o) {
     // { up: number; down: number }
-    Object.keys(o).map((k, i) => {
+    Object.keys(o).map((k) => {
       let item = o[k];
       let titem = this[k]
       if (titem) {
