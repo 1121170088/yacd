@@ -170,9 +170,9 @@ function useConnection(apiConfig) {
 
             Object.keys(o).map((k) => {
                 let item = o[k];
-                item.upTotal = prettyBytes(item.uploadTotal),
-                    item.dlTotal = prettyBytes(item.downloadTotal),
-                    item.connNumber = item.connections.length
+                item.upTotal = prettyBytes(item.uploadTotal);
+                item.dlTotal = prettyBytes(item.downloadTotal);
+                item.connNumber = item.connections.length;
             });
 
             setState(o);
