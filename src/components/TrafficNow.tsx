@@ -1,5 +1,9 @@
 import * as React from 'react';
+import {Suspense} from "react";
 import { useTranslation } from 'react-i18next';
+
+import Loading from "$src/components/Loading";
+import TrafficChart from "$src/components/TrafficChart";
 
 import * as connAPI from '../api/connections';
 import { fetchData } from '../api/traffic';
@@ -7,9 +11,6 @@ import prettyBytes from '../misc/pretty-bytes';
 import { getClashAPIConfig } from '../store/app';
 import { connect } from './StateProvider';
 import s0 from './TrafficNow.module.scss';
-import {Suspense} from "react";
-import Loading from "$src/components/Loading";
-import TrafficChart from "$src/components/TrafficChart";
 
 const { useState, useEffect, useCallback } = React;
 
@@ -22,7 +23,7 @@ function TrafficNow({ apiConfig }) {
   const { t } = useTranslation();
   const speed = useSpeed(apiConfig);
   const state = useConnection(apiConfig);
-  let ifconnNumber = function (state) {
+  const ifconnNumber = function (state) {
     if (state) {
         return (
             <div className={s0.sec}>
@@ -32,7 +33,7 @@ function TrafficNow({ apiConfig }) {
         )
     }
   }
-    let ifupTotal = function (state) {
+    const ifupTotal = function (state) {
         if (state) {
             return (
                 <div className={s0.sec}>
@@ -42,7 +43,7 @@ function TrafficNow({ apiConfig }) {
             )
         }
     }
-    let ifdlTotal = function (state) {
+    const ifdlTotal = function (state) {
         if (state) {
             return (
                 <div className={s0.sec}>
@@ -136,9 +137,10 @@ function useSpeed(apiConfig) {
         return fetchData(apiConfig).subscribe((o) => {
 
             Object.keys(o).map((k) => {
-                let item = o[k];
+                const item = o[k];
                 item.upStr = prettyBytes(item.up) + '/s';
                 item.downStr = prettyBytes(item.down) + '/s';
+                return true
             });
                 setSpeed(o);
             }
@@ -169,10 +171,11 @@ function useConnection(apiConfig) {
         (o) => {
 
             Object.keys(o).map((k) => {
-                let item = o[k];
+                const item = o[k];
                 item.upTotal = prettyBytes(item.uploadTotal);
                 item.dlTotal = prettyBytes(item.downloadTotal);
                 item.connNumber = item.connections.length;
+                return true
             });
 
             setState(o);

@@ -18,8 +18,8 @@ const traffic = {
   appendData(o) {
     // { up: number; down: number }
     Object.keys(o).map((k) => {
-      let item = o[k];
-      let titem = this[k]
+      const item = o[k];
+      const titem = this[k]
       if (titem) {
         titem.up.shift();
         titem.down.shift();
@@ -31,6 +31,7 @@ const traffic = {
         titem.labels.push(l);
       }
 
+      return true
     });
 
 

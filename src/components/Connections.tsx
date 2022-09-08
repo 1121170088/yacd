@@ -135,10 +135,11 @@ function Conn({ apiConfig }) {
   const read = useCallback(
     (o) => {
         // console.log(o)
-        let connections =[]
+        const connections =[]
         Object.keys(o).map((k) => {
-            let item = o[k];
+            const item = o[k];
             connections.push(...item.connections)
+            return true
         });
       const prevConnsKv = arrayToIdKv(prevConnsRef.current);
       const now = Date.now();
