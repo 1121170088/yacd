@@ -8,13 +8,14 @@ import useLineChart from '../hooks/useLineChart';
 import { chartJSResource, chartStyles, commonDataSetProps } from '../misc/chart';
 import { getClashAPIConfig, getSelectedChartStyleIndex } from '../store/app';
 import { connect } from './StateProvider';
+import {appendLog} from "$src/store/logs";
 
 const { useMemo } = React;
 
 const chartWrapperStyle: React.CSSProperties = {
   // make chartjs chart responsive
   position: 'relative',
-  maxWidth: 1000,
+  maxWidth: 666,
 };
 
 const mapState = (s: State) => ({
@@ -24,36 +25,48 @@ const mapState = (s: State) => ({
 
 export default connect(mapState)(TrafficChart);
 
-function TrafficChart({ apiConfig, selectedChartStyleIndex }) {
+function TrafficChart({ apiConfig, selectedChartStyleIndex, id} ) {
   const ChartMod = chartJSResource.read();
-  const traffic = fetchData(apiConfig);
+  const traffic2 = fetchData(apiConfig);
+  let traffic = {
+    labels: Array(150).fill(0),
+    up: Array(150),
+    down: Array(150),
+    subscribe: traffic2.subscribe,
+    subscribers: traffic2.subscribers
+  }
+  traffic2[id] = traffic
   const { t } = useTranslation();
   const data = useMemo(
-    () => ({
-      labels: traffic.labels,
-      datasets: [
-        {
-          ...commonDataSetProps,
-          ...chartStyles[selectedChartStyleIndex].up,
-          label: t('Up'),
-          data: traffic.up,
-        },
-        {
-          ...commonDataSetProps,
-          ...chartStyles[selectedChartStyleIndex].down,
-          label: t('Down'),
-          data: traffic.down,
-        },
-      ],
-    }),
-    [traffic, selectedChartStyleIndex, t]
+      () => ({
+        labels: traffic.labels,
+        datasets: [
+          {
+            ...commonDataSetProps,
+            ...chartStyles[selectedChartStyleIndex].up,
+            label: t('Up'),
+            data: traffic.up,
+          },
+          {
+            ...commonDataSetProps,
+            ...chartStyles[selectedChartStyleIndex].down,
+            label: t('Down'),
+            data: traffic.down,
+          },
+        ],
+      }),
+      [traffic, selectedChartStyleIndex, t]
   );
 
-  useLineChart(ChartMod.Chart, 'trafficChart', data, traffic);
+  useLineChart(ChartMod.Chart, id, data, traffic);
+  console.log("-----------")
+  console.log(id)
+  console.log(traffic)
+  console.log(data)
 
   return (
     <div style={chartWrapperStyle}>
-      <canvas id="trafficChart" />
+      <canvas id={id} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { ClashAPIConfig } from '$src/types';
 
 import { buildWebSocketURL, getURLAndInit } from '../misc/request-helper';
+import prettyBytes from "$src/misc/pretty-bytes";
 
 const endpoint = '/traffic';
 const textDecoder = new TextDecoder('utf-8');
@@ -8,21 +9,31 @@ const textDecoder = new TextDecoder('utf-8');
 const Size = 150;
 
 const traffic = {
-  labels: Array(Size).fill(0),
-  up: Array(Size),
-  down: Array(Size),
+  // labels: Array(Size).fill(0),
+  // up: Array(Size),
+  // down: Array(Size),
+
 
   size: Size,
   subscribers: [],
-  appendData(o: { up: number; down: number }) {
-    this.up.shift();
-    this.down.shift();
-    this.labels.shift();
+  appendData(o) {
+    // { up: number; down: number }
+    Object.keys(o).map((k, i) => {
+      let item = o[k];
+      let titem = this[k]
+      if (titem) {
+        titem.up.shift();
+        titem.down.shift();
+        titem.labels.shift();
 
-    const l = Date.now();
-    this.up.push(o.up);
-    this.down.push(o.down);
-    this.labels.push(l);
+        const l = Date.now();
+        titem.up.push(item.up);
+        titem.down.push(item.down);
+        titem.labels.push(l);
+      }
+
+    });
+
 
     this.subscribers.forEach((f) => f(o));
   },
@@ -40,6 +51,7 @@ let fetched = false;
 let decoded = '';
 
 function parseAndAppend(x: string) {
+  // {"DIRECT":{"up":0,"down":0},"socks":{"up":0,"down":0}}
   traffic.appendData(JSON.parse(x));
 }
 

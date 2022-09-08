@@ -7,6 +7,9 @@ import prettyBytes from '../misc/pretty-bytes';
 import { getClashAPIConfig } from '../store/app';
 import { connect } from './StateProvider';
 import s0 from './TrafficNow.module.scss';
+import {Suspense} from "react";
+import Loading from "$src/components/Loading";
+import TrafficChart from "$src/components/TrafficChart";
 
 const { useState, useEffect, useCallback } = React;
 
@@ -17,63 +20,166 @@ export default connect(mapState)(TrafficNow);
 
 function TrafficNow({ apiConfig }) {
   const { t } = useTranslation();
-  const { upStr, downStr } = useSpeed(apiConfig);
-  const { upTotal, dlTotal, connNumber } = useConnection(apiConfig);
+  const speed = useSpeed(apiConfig);
+  const state = useConnection(apiConfig);
+  let ifconnNumber = function (state) {
+    if (state) {
+        return (
+            <div className={s0.sec}>
+                <div>{t('Active Connections')}</div>
+                <div>{state.connNumber}</div>
+            </div>
+        )
+    }
+  }
+    let ifupTotal = function (state) {
+        if (state) {
+            return (
+                <div className={s0.sec}>
+                    <div>{t('Upload Total')}</div>
+                    <div>{state.upTotal}</div>
+                </div>
+            )
+        }
+    }
+    let ifdlTotal = function (state) {
+        if (state) {
+            return (
+                <div className={s0.sec}>
+                    <div>{t('Download Total')}</div>
+                    <div>{state.dlTotal}</div>
+                </div>
+            )
+        }
+    }
   return (
-    <div className={s0.TrafficNow}>
-      <div className={s0.sec}>
-        <div>{t('Upload')}</div>
-        <div>{upStr}</div>
+    // <div className={s0.TrafficNow}>
+    //   <div className={s0.sec}>
+    //     <div>{t('Upload')}</div>
+    //     <div>{upStr}</div>
+    //   </div>
+    //   <div className={s0.sec}>
+    //     <div>{t('Download')}</div>
+    //     <div>{downStr}</div>
+    //   </div>
+    //   <div className={s0.sec}>
+    //     <div>{t('Upload Total')}</div>
+    //     <div>{upTotal}</div>
+    //   </div>
+    //   <div className={s0.sec}>
+    //     <div>{t('Download Total')}</div>
+    //     <div>{dlTotal}</div>
+    //   </div>
+    //   <div className={s0.sec}>
+    //     <div>{t('Active Connections')}</div>
+    //     <div>{connNumber}</div>
+    //   </div>
+    // </div>
+      <div className={s0.aOverview}>
+          {
+              Object.keys(speed).map((k, i) => {
+                  return (
+                      <div key={i}>
+                          <div>{k}</div>
+                          <div className={s0.TrafficNow} >
+                              <div className={s0.sec}>
+                                  <div>{t('Upload')}</div>
+                                  <div>{speed[k].upStr}</div>
+                              </div>
+                              <div className={s0.sec}>
+                                  <div>{t('Download')}</div>
+                                  <div>{speed[k].downStr}</div>
+                              </div>
+                              {
+                                  ifupTotal(state[k])
+                              }
+                              {
+                                  ifdlTotal(state[k])
+                              }
+                              {
+                                  ifconnNumber(state[k])
+                              }
+
+
+                          </div>
+
+                          <div className={s0.chart}>
+                              <Suspense fallback={<Loading height="200px" />}>
+                                  <TrafficChart id={k}/>
+                              </Suspense>
+                          </div>
+                      </div>
+
+
+                  )
+              })
+          }
       </div>
-      <div className={s0.sec}>
-        <div>{t('Download')}</div>
-        <div>{downStr}</div>
-      </div>
-      <div className={s0.sec}>
-        <div>{t('Upload Total')}</div>
-        <div>{upTotal}</div>
-      </div>
-      <div className={s0.sec}>
-        <div>{t('Download Total')}</div>
-        <div>{dlTotal}</div>
-      </div>
-      <div className={s0.sec}>
-        <div>{t('Active Connections')}</div>
-        <div>{connNumber}</div>
-      </div>
-    </div>
   );
 }
 
 function useSpeed(apiConfig) {
-  const [speed, setSpeed] = useState({ upStr: '0 B/s', downStr: '0 B/s' });
-  useEffect(() => {
-    return fetchData(apiConfig).subscribe((o) =>
-      setSpeed({
-        upStr: prettyBytes(o.up) + '/s',
-        downStr: prettyBytes(o.down) + '/s',
-      })
-    );
-  }, [apiConfig]);
+  // const [speed, setSpeed] = useState({ upStr: '0 B/s', downStr: '0 B/s' });
+  // useEffect(() => {
+  //   return fetchData(apiConfig).subscribe((o) => {
+  //           console.log(o)
+  //           setSpeed({
+  //               upStr: prettyBytes(o.up) + '/s',
+  //               downStr: prettyBytes(o.down) + '/s',
+  //           })
+  //       }
+  //
+  //   );
+  // }, [apiConfig]);
+    const [speed, setSpeed] = useState({ });
+    useEffect(() => {
+        return fetchData(apiConfig).subscribe((o) => {
+
+            Object.keys(o).map((k, i) => {
+                let item = o[k];
+                item.upStr = prettyBytes(item.up) + '/s';
+                item.downStr = prettyBytes(item.down) + '/s';
+            });
+                setSpeed(o);
+            }
+
+        );
+    }, [apiConfig]);
   return speed;
 }
 
 function useConnection(apiConfig) {
-  const [state, setState] = useState({
-    upTotal: '0 B',
-    dlTotal: '0 B',
-    connNumber: 0,
-  });
-  const read = useCallback(
-    ({ downloadTotal, uploadTotal, connections }) => {
-      setState({
-        upTotal: prettyBytes(uploadTotal),
-        dlTotal: prettyBytes(downloadTotal),
-        connNumber: connections.length,
-      });
-    },
-    [setState]
-  );
+  // const [state, setState] = useState({
+  //   upTotal: '0 B',
+  //   dlTotal: '0 B',
+  //   connNumber: 0,
+  // });
+  // const read = useCallback(
+  //   ({ downloadTotal, uploadTotal, connections }) => {
+  //     setState({
+  //       upTotal: prettyBytes(uploadTotal),
+  //       dlTotal: prettyBytes(downloadTotal),
+  //       connNumber: connections.length,
+  //     });
+  //   },
+  //   [setState]
+  // );
+    const [state, setState] = useState({});
+    const read = useCallback(
+        (o) => {
+
+            Object.keys(o).map((k, i) => {
+                let item = o[k];
+                item.upTotal = prettyBytes(item.uploadTotal),
+                    item.dlTotal = prettyBytes(item.downloadTotal),
+                    item.connNumber = item.connections.length
+            });
+
+            console.log(o)
+            setState(o);
+        },
+        [setState]
+    );
   useEffect(() => {
     return connAPI.fetchData(apiConfig, read);
   }, [apiConfig, read]);

@@ -133,7 +133,13 @@ function Conn({ apiConfig }) {
   }, [apiConfig, closeCloseAllModal]);
   const prevConnsRef = useRef(conns);
   const read = useCallback(
-    ({ connections }) => {
+    (o) => {
+        // console.log(o)
+        let connections =[]
+        Object.keys(o).map((k, i) => {
+            let item = o[k];
+            connections.push(...item.connections)
+        });
       const prevConnsKv = arrayToIdKv(prevConnsRef.current);
       const now = Date.now();
       const x = connections.map((c: ConnectionItem) =>
@@ -141,7 +147,7 @@ function Conn({ apiConfig }) {
       );
       const closed = [];
       for (const c of prevConnsRef.current) {
-        const idx = x.findIndex((conn: ConnectionItem) => conn.id === c.id);
+        const idx = x.findIndex((conn) => conn.id === c.id);
         if (idx < 0) closed.push(c);
       }
       setClosedConns((prev) => {

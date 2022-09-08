@@ -35,7 +35,9 @@ const portFields = [
   { key: 'port', label: 'HTTP Proxy Port' },
   { key: 'socks-port', label: 'SOCKS5 Proxy Port' },
   { key: 'mixed-port', label: 'Mixed Port' },
+  { key: 'mixed-tls-port', label: 'Mixed Tls Port' },
   { key: 'redir-port', label: 'Redir Port' },
+
 ];
 
 const langOptions = [

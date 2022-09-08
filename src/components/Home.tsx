@@ -12,16 +12,17 @@ export default function Home() {
   return (
     <div>
       <ContentHeader title={t('Overview')} />
-      <div className={s0.root}>
-        <div>
-          <TrafficNow />
+        <div className={s0.root}>
+            <div>
+                <TrafficNow />
+            </div>
+            {/*<div className={s0.chart}>*/}
+            {/*    <Suspense fallback={<Loading height="200px" />}>*/}
+            {/*        <TrafficChart id="DIRECT"/>*/}
+            {/*    </Suspense>*/}
+            {/*</div>*/}
+
         </div>
-        <div className={s0.chart}>
-          <Suspense fallback={<Loading height="200px" />}>
-            <TrafficChart />
-          </Suspense>
-        </div>
-      </div>
     </div>
   );
 }
