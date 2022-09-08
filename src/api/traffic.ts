@@ -1,7 +1,6 @@
 import { ClashAPIConfig } from '$src/types';
 
 import { buildWebSocketURL, getURLAndInit } from '../misc/request-helper';
-import prettyBytes from "$src/misc/pretty-bytes";
 
 const endpoint = '/traffic';
 const textDecoder = new TextDecoder('utf-8');
