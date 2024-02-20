@@ -67,10 +67,10 @@ function TrafficChart({ apiConfig, selectedChartStyleIndex, id} ) {
   );
 
   useLineChart(ChartMod.Chart, id, data, traffic);
-  console.log("-----------")
-  console.log(id)
-  console.log(traffic)
-  console.log(data)
+  // console.log("-----------")
+  // console.log(id)
+  // console.log(traffic)
+  // console.log(data)
 
   return (
     <div style={chartWrapperStyle}>

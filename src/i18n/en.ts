@@ -1,5 +1,6 @@
 export const data = {
   Overview: 'Overview',
+  MemoryUsage: 'MemoryUsage',
   Proxies: 'Proxies',
   Rules: 'Rules',
   Conns: 'Conns',
