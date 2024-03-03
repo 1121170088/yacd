@@ -81,7 +81,7 @@ function TrafficNow({ apiConfig }) {
               Object.keys(speed).map((k, i) => {
                   return (
                       <div key={i}>
-                          <div>{k}</div>
+                          <div className={s0.ChannelName}>{k}</div>
                           <div className={s0.TrafficNow} >
                               <div className={s0.sec}>
                                   <div>{t('Upload')}</div>

@@ -28,7 +28,7 @@ const SideBarRow = React.memo(function SideBarRow({
   const className = cx(s.row, isActive ? s.rowActive : null);
   return (
     <Link to={to} className={className}>
-      <Comp />
+      {/*<Comp />*/}
       <div className={s.label}>{labelText}</div>
     </Link>
   );

@@ -13,12 +13,12 @@ const mapState = (s) => ({
 });
 
 export default connect(mapState)(ContentHeader);
-function ContentHeader({apiConfig}) {
+function ContentHeader({apiConfig, title}) {
   const { t } = useTranslation();
   const memory = useMemory(apiConfig);
   return (
     <div className={s0.root}>
-      <h1 className={s0.h1}>{t('Overview')}</h1>
+      <h1 className={s0.h1}>{title}</h1>
       <div>
         {t('MemoryUsage')}： { (memory.inuse / 1024.0/1024).toFixed(2)} MB
       </div>
