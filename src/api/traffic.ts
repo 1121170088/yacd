@@ -19,17 +19,16 @@ const traffic = {
     // { up: number; down: number }
     Object.keys(o).map((k) => {
       const item = o[k];
-      const titem = this[k]
-      if (titem) {
-        titem.up.shift();
-        titem.down.shift();
-        titem.labels.shift();
+      const titem = this.gettraffic(k)
+      titem.up.shift();
+      titem.down.shift();
+      titem.labels.shift();
 
-        const l = Date.now();
-        titem.up.push(item.up);
-        titem.down.push(item.down);
-        titem.labels.push(l);
-      }
+      const l = Date.now();
+      titem.up.push(item.up);
+      titem.down.push(item.down);
+      titem.labels.push(l);
+      titem.subscribers.forEach((f) => f(o));
 
       return true
     });
@@ -37,7 +36,26 @@ const traffic = {
 
     this.subscribers.forEach((f) => f(o));
   },
-
+  gettraffic(id:string) {
+     const traffic = this[id];
+     if (traffic) {
+       return traffic;
+     }
+     this[id] = {
+       subscribers: [],
+       labels: Array(Size).fill(0),
+       up: Array(Size).fill(0),
+       down: Array(Size).fill(0),
+       subscribe(listener: (x: any) => void) {
+         this.subscribers.push(listener);
+         return () => {
+           const idx = this.subscribers.indexOf(listener);
+           this.subscribers.splice(idx, 1);
+         };
+       },
+     }
+     return this[id]
+  },
   subscribe(listener: (x: any) => void) {
     this.subscribers.push(listener);
     return () => {
@@ -88,7 +106,10 @@ function pump(reader: ReadableStreamDefaultReader) {
 // similar to ws readyState but not the same
 // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState
 let wsState: number;
-function fetchData(apiConfig: ClashAPIConfig) {
+function fetchData(apiConfig: ClashAPIConfig, id:string) {
+  if (id != undefined) {
+    return traffic.gettraffic(id)
+  }
   if (fetched || wsState === 1) return traffic;
   wsState = 1;
   const url = buildWebSocketURL(apiConfig, endpoint);
@@ -103,6 +124,7 @@ function fetchData(apiConfig: ClashAPIConfig) {
   ws.addEventListener('message', function (event) {
     parseAndAppend(event.data);
   });
+
   return traffic;
 }
 

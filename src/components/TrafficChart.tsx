@@ -27,43 +27,28 @@ export default connect(mapState)(TrafficChart);
 
 function TrafficChart({ apiConfig, selectedChartStyleIndex, id} ) {
   const ChartMod = chartJSResource.read();
-  const traffic2 = fetchData(apiConfig);
-  // const traffic = {
-  //   labels: Array(150).fill(0),
-  //   up: Array(150),
-  //   down: Array(150),
-  //   subscribe: traffic2.subscribe,
-  //   subscribers: traffic2.subscribers
-  // }
-  const traffic = useMemo(() => (
-      {
-      labels: Array(150).fill(0),
-      up: Array(150),
-      down: Array(150),
-      subscribe: traffic2.subscribe,
-      subscribers: traffic2.subscribers
-      }), [traffic2]);
-  traffic2[id] = traffic
+  const traffic = fetchData(apiConfig, id);
+
   const { t } = useTranslation();
   const data = useMemo(
-      () => ({
-        labels: traffic.labels,
-        datasets: [
-          {
-            ...commonDataSetProps,
-            ...chartStyles[selectedChartStyleIndex].up,
-            label: t('Up'),
-            data: traffic.up,
-          },
-          {
-            ...commonDataSetProps,
-            ...chartStyles[selectedChartStyleIndex].down,
-            label: t('Down'),
-            data: traffic.down,
-          },
-        ],
-      }),
-      [traffic, selectedChartStyleIndex, t]
+    () => ({
+      labels: traffic.labels,
+      datasets: [
+        {
+          ...commonDataSetProps,
+          ...chartStyles[selectedChartStyleIndex].up,
+          label: t('Up'),
+          data: traffic.up,
+        },
+        {
+          ...commonDataSetProps,
+          ...chartStyles[selectedChartStyleIndex].down,
+          label: t('Down'),
+          data: traffic.down,
+        },
+      ],
+    }),
+    [traffic, selectedChartStyleIndex, t]
   );
 
   useLineChart(ChartMod.Chart, id, data, traffic);

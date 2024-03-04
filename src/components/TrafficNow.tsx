@@ -11,6 +11,7 @@ import prettyBytes from '../misc/pretty-bytes';
 import { getClashAPIConfig } from '../store/app';
 import { connect } from './StateProvider';
 import s0 from './TrafficNow.module.scss';
+import { keys } from 'lodash-es';
 
 const { useState, useEffect, useCallback } = React;
 
@@ -134,14 +135,15 @@ function useSpeed(apiConfig) {
   // }, [apiConfig]);
     const [speed, setSpeed] = useState({ });
     useEffect(() => {
-        return fetchData(apiConfig).subscribe((o) => {
+        return fetchData(apiConfig, undefined).subscribe((o) => {
 
             Object.keys(o).map((k) => {
                 const item = o[k];
-                item.upStr = prettyBytes(item.up) + '/s';
-                item.downStr = prettyBytes(item.down) + '/s';
+              item.upStr=prettyBytes(item.up) + '/s';
+                item.downStr= prettyBytes(item.down) + '/s';
                 return true
             });
+
                 setSpeed(o);
             }
 
