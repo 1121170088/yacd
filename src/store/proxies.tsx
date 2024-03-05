@@ -154,18 +154,22 @@ async function closeGroupConns(
     /* throw new Error(); */
   }
   const json = await res.json();
-  const connections = json.connections;
   const idsToClose = [];
-  for (const conn of connections) {
-    if (
-      // include the groupName
-      conn.chains.indexOf(groupName) > -1 &&
-      // but not include the itemName
-      conn.chains.indexOf(exceptionItemName) < 0
-    ) {
-      idsToClose.push(conn.id);
+  Object.keys(json).map((k) => {
+    const item = json[k];
+    const connections = item.connections;
+    for (const conn of connections) {
+      if (
+          // include the groupName
+          conn.chains.indexOf(groupName) > -1 &&
+          // but not include the itemName
+          conn.chains.indexOf(exceptionItemName) < 0
+      ) {
+        idsToClose.push(conn.id);
+      }
     }
-  }
+    return true
+  });
 
   await Promise.all(idsToClose.map((id) => connAPI.closeConnById(apiConfig, id).catch(noop)));
 }
