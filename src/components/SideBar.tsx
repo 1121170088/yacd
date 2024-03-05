@@ -3,19 +3,20 @@ import cx from 'clsx';
 import * as React from 'react';
 import { Info } from 'react-feather';
 import { useTranslation } from 'react-i18next';
-import { FcAreaChart, FcDocument, FcGlobe, FcLink, FcRuler, FcSettings } from 'react-icons/fc';
+// import { FcAreaChart, FcDocument, FcGlobe, FcLink, FcRuler, FcSettings } from 'react-icons/fc';
+import { CiDesktop,CiGlobe ,CiRuler, CiLink, CiSettings, CiFileOn} from 'react-icons/ci';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeSwitcher } from 'src/components/shared/ThemeSwitcher';
 
 import s from './SideBar.module.scss';
 
 const icons = {
-  activity: FcAreaChart,
-  globe: FcGlobe,
-  command: FcRuler,
-  file: FcDocument,
-  settings: FcSettings,
-  link: FcLink,
+  activity: CiDesktop,
+  globe: CiGlobe,
+  command: CiRuler,
+  file: CiLink,
+  settings: CiSettings,
+  link: CiFileOn,
 };
 
 const SideBarRow = React.memo(function SideBarRow({
@@ -28,7 +29,7 @@ const SideBarRow = React.memo(function SideBarRow({
   const className = cx(s.row, isActive ? s.rowActive : null);
   return (
     <Link to={to} className={className}>
-      {/*<Comp />*/}
+      <Comp />
       <div className={s.label}>{labelText}</div>
     </Link>
   );

@@ -2,7 +2,9 @@
   display: grid;
   grid-template-columns: 1fr minmax(auto, 330px);
   align-items: center;
-
+  z-index: 1;
+  background-color: var(--color-background2);
+  backdrop-filter: blur(36px);
   /*
    * the content header has some padding
    * we need to apply some right padding to this container then

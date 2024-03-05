@@ -60,8 +60,8 @@
 }
 
 body {
-  //font-family: var(--font-normal);
-  font-family: 'Segoe UI',SegoeUI,'Microsoft YaHei',微软雅黑,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: var(--font-normal);
+  //font-family: 'Segoe UI',SegoeUI,'Microsoft YaHei',微软雅黑,"Helvetica Neue",Helvetica,Arial,sans-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -97,18 +97,21 @@ body {
   --select-border-color: #040404;
   --select-bg-hover: url(data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%228%22%20height%3D%2224%22%20viewBox%3D%220%200%208%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M4%207L7%2011H1L4%207Z%22%20fill%3D%22%23ffffff%22%20%2F%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M4%2017L1%2013L7%2013L4%2017Z%22%20fill%3D%22%23ffffff%22%20%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20);
   --color-proxy-dot-selected-ind-bo: transparent;
+  //--side-bar-bg: #F5F7F9;
 }
 @mixin light {
-  --color-background: #eee;
-  --color-background2: rgba(240, 240, 240, 0.3);
+  //--color-background: #eee;
+  --color-background: #fff;
+  //--color-background2: rgba(240, 240, 240, 0.3);
   --color-bg-card: #fafafa;
   --card-hover-border-lightness: 80%;
   --color-text: #222;
   --color-text-secondary: #646464;
   --color-text-highlight: #040404;
   --color-bg-sidebar: #f8f8f8;
-  --color-input-bg: #f0f0f0;
-  --color-input-border: #c0c0c0;
+  //--color-input-bg: #f0f0f0;
+  --color-input-bg: #F0F1F4;
+  //--color-input-border: #c0c0c0;
   --color-toggle-bg: #ffffff;
   --color-toggle-selected: #d7d7d7;
   --color-icon: #5b5b5b;
@@ -125,6 +128,8 @@ body {
   --select-border-color: #999999;
   --select-bg-hover: url(data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%228%22%20height%3D%2224%22%20viewBox%3D%220%200%208%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M4%207L7%2011H1L4%207Z%22%20fill%3D%22%23222222%22%20%2F%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M4%2017L1%2013L7%2013L4%2017Z%22%20fill%3D%22%23222222%22%20%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20);
   --color-proxy-dot-selected-ind-bo: #888;
+  --side-bar-bg: #F5F7F9;
+  --side-bar-active-bg:#fafafa;
 }
 
 :root[data-theme='auto'] {
