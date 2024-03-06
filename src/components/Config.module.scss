@@ -37,3 +37,16 @@
 .label {
   padding: 11px 0;
 }
+
+.topBar {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  z-index: 1;
+  background-color: var(--color-background2);
+  backdrop-filter: blur(36px);
+}

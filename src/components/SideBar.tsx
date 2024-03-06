@@ -9,14 +9,17 @@ import { Link, useLocation } from 'react-router-dom';
 import { ThemeSwitcher } from 'src/components/shared/ThemeSwitcher';
 
 import s from './SideBar.module.scss';
-
+import {fetchMemory} from "$src/api/memory-usage";
+import {getClashAPIConfig} from "$src/store/app";
+import {connect} from "$src/components/StateProvider";
+const { useState, useEffect } = React;
 const icons = {
   activity: CiDesktop,
   globe: CiGlobe,
   command: CiRuler,
-  file: CiLink,
+  file: CiFileOn,
   settings: CiSettings,
-  link: CiFileOn,
+  link: CiLink,
 };
 
 const SideBarRow = React.memo(function SideBarRow({
@@ -75,9 +78,14 @@ const pages = [
   },
 ];
 
-export default function SideBar() {
+const mapState = (s) => ({
+  apiConfig: getClashAPIConfig(s),
+});
+export default connect(mapState)(SideBar);
+function SideBar({apiConfig}) {
   const { t } = useTranslation();
   const location = useLocation();
+  const memory = useMemory(apiConfig);
   return (
     <div className={s.root}>
       <div className={s.logoPlaceholder} />
@@ -91,7 +99,11 @@ export default function SideBar() {
             labelText={t(labelText)}
           />
         ))}
+        <div className={s.memory}>
+          {t('MemoryUsage')}: <br/><br/>{ (memory.inuse / 1024.0/1024).toFixed(2)}MB
+        </div>
       </div>
+
       <div className={s.footer}>
         <ThemeSwitcher />
         <Tooltip label={t('about')}>
@@ -102,4 +114,24 @@ export default function SideBar() {
       </div>
     </div>
   );
+}
+
+
+function useMemory(apiConfig) {
+  const [memory, setMemory] = useState({
+    inuse: 0
+  });
+  useEffect(() => {
+    return fetchMemory(apiConfig, (o) => {
+      try {
+        const memo = JSON.parse(o);
+        setMemory(memo);
+      } catch (e) {
+        setMemory( {
+          inuse: 0
+        })
+      }
+    })
+  }, [apiConfig]);
+  return memory;
 }

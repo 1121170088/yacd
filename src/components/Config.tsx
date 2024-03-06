@@ -186,7 +186,10 @@ function ConfigImpl({
 
   return (
     <div>
-      <ContentHeader title={t('Config')} />
+      <div className={s0.topBar}>
+        <ContentHeader title={t('Config')}  />
+      </div>
+
       <div className={s0.root}>
         {portFields.map((f) =>
           configState[f.key] !== undefined ? (

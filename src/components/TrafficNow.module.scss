@@ -12,7 +12,7 @@
     padding: 10px;
     background-color: var(--color-bg-card);
     border-radius: 10px;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    //box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
     div:nth-child(1) {
       color: var(--color-text-secondary);
       font-size: 0.7em;
@@ -32,7 +32,7 @@
 
   display: grid;
   grid-template-columns: repeat(auto-fit, 600px);
-  grid-gap: 72px;
+  grid-gap: 59px;
 
 }
 .ChannelName {

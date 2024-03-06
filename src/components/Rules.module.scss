@@ -1,4 +1,6 @@
 .header {
+  position: sticky;
+  top: 0;
   display: grid;
   grid-template-columns: 1fr minmax(auto, 330px);
   align-items: center;

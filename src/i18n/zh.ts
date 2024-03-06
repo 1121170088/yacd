@@ -1,6 +1,6 @@
 export const data = {
   Overview: '概览',
-  MemoryUsage: '内存占用',
+  MemoryUsage: '内存',
   Proxies: '代理',
   Rules: '规则',
   Conns: '连接',

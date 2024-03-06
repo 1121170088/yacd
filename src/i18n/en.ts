@@ -1,6 +1,6 @@
 export const data = {
   Overview: 'Overview',
-  MemoryUsage: 'MemoryUsage',
+  MemoryUsage: 'Memory',
   Proxies: 'Proxies',
   Rules: 'Rules',
   Conns: 'Conns',
