@@ -1,5 +1,6 @@
-import { buildWebSocketURL, getURLAndInit } from '../misc/request-helper';
 import { ClashAPIConfig } from '$src/types';
+
+import { buildWebSocketURL } from '../misc/request-helper';
 
 const endpoint = '/memory';
 

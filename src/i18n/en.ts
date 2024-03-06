@@ -37,4 +37,5 @@ export const data = {
   lang: 'Language',
   update_all_rule_provider: 'Update all rule providers',
   update_all_proxy_provider: 'Update all proxy providers',
+  "reboot": 'reboot',
 };

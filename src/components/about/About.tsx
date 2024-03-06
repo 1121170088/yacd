@@ -39,7 +39,7 @@ function AboutImpl(props: Props) {
       {version && version.version ? (
         <Version name="Clash" version={version.version} link="https://github.com/Dreamacro/clash" />
       ) : null}
-      <Version name="Yacd" version={__VERSION__} link="https://github.com/haishanh/yacd" />
+      <Version name="Yacd" version={__VERSION__} link="https://github.com/1121170088/yacd" />
     </>
   );
 }

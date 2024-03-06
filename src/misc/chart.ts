@@ -20,10 +20,11 @@ export const commonChartOptions: import('chart.js').ChartOptions<'line'> = {
       display: true,
       grid: {
         display: true,
-        color: '#555',
         drawTicks: false,
-        borderDash: [3, 6],
-        drawBorder: false,
+      },
+      border: {
+        dash: [6, 6],
+        display: true,
       },
       ticks: {
         callback(value: number) {

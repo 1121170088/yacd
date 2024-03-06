@@ -38,7 +38,7 @@ export function fetchConfigs(apiConfig: ClashAPIConfig) {
       // normally user will land on the "traffic chart" page first
       // calling this here will let the data start streaming
       // the traffic chart should already subscribed to the streaming
-      trafficAPI.fetchData(apiConfig);
+      trafficAPI.fetchData(apiConfig, undefined);
     } else {
       dispatch(markHaveFetchedConfig());
     }

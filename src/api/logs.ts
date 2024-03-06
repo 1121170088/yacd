@@ -91,15 +91,23 @@ function makeConnStr(c: LogsAPIConfig) {
 
 let prevConnStr: string;
 let controller: AbortController;
-
+let wsState: number;
 export function fetchLogs(apiConfig: LogsAPIConfig, appendLog: AppendLogFn) {
+  if (wsState === 1) {
+    return;
+  }
+  wsState = 1;
   if (apiConfig.logLevel === 'uninit') return;
   if (fetched || (ws && ws.readyState === WebSocketReadyState.Open)) return;
   prevAppendLogFn = appendLog;
   const url = buildLogsWebSocketURL(apiConfig, endpoint);
   ws = new WebSocket(url);
   ws.addEventListener('error', () => {
-    fetchLogsWithFetch(apiConfig, appendLog);
+    // fetchLogsWithFetch(apiConfig, appendLog);
+    wsState = 3;
+  });
+  ws.addEventListener('close', function (_ev) {
+    wsState = 3;
   });
   ws.addEventListener('message', function (event) {
     appendData(event.data, appendLog);

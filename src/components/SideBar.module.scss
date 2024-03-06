@@ -129,12 +129,4 @@
 .iconWrapper:focus {
   border-color: var(--color-focus-blue);
 }
-.memory {
-  margin: 69px 5px;
-  padding: 0 26px;
-}
-@media (max-width: 768px) {
-  .memory  {
-    display: none;
-  }
-}
+

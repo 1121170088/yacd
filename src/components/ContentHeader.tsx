@@ -1,9 +1,4 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-
-import {fetchMemory} from '$src/api/memory-usage';
-import { connect } from '$src/components/StateProvider';
-import { getClashAPIConfig } from '$src/store/app';
 
 import s0 from './ContentHeader.module.scss';
 

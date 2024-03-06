@@ -26,13 +26,12 @@
 }
 .aOverview {
   color: var(--color-text);
-  display: flex;
+  //display: flex;
   align-items: center;
-  flex-wrap: wrap;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, 600px);
-  grid-gap: 59px;
+  grid-gap: 56px;
 
 }
 .ChannelName {
