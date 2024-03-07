@@ -9,15 +9,20 @@ export const commonDataSetProps = { borderWidth: 1, pointRadius: 0, tension: 0.2
 
 export const commonChartOptions: import('chart.js').ChartOptions<'line'> = {
   responsive: true,
+  // animation: false,
+  spanGaps: true,
+  showLine: false,
+  normalized: true,
   maintainAspectRatio: true,
   plugins: {
     legend: { labels: { boxWidth: 20 } },
   },
   scales: {
-    x: { display: false, type: 'category' },
+    x: { display: false, type: 'category',},
     y: {
       type: 'linear',
       display: true,
+      beginAtZero: true,
       grid: {
         display: true,
         drawTicks: false,
