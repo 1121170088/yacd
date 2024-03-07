@@ -21,7 +21,7 @@ function Reboot({apiConfig}) {
     rebootF(apiConfig, alert);
   }
 
-  console.log(apiConfig)
+  // console.log(apiConfig)
 
   return (
     <Tooltip label={t('reboot')} >

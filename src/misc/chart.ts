@@ -26,10 +26,12 @@ export const commonChartOptions: import('chart.js').ChartOptions<'line'> = {
       grid: {
         display: true,
         drawTicks: false,
+        color: '#555',
       },
       border: {
-        dash: [6, 6],
+        dash: [3, 6],
         display: true,
+        color: 'rgba(85,85,85,0)',
       },
       ticks: {
         callback(value: number) {
