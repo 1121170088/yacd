@@ -1,3 +1,12 @@
 .reboot {
   cursor: pointer;
+  border: none;
+  background: transparent;
+  width: fit-content;
+  margin: 11px auto;
+}
+@media (max-width: 768px) {
+  .reboot  {
+    display: none;
+  }
 }

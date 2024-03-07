@@ -61,7 +61,7 @@
     "react-table": "7.8.0",
     "react-tabs": "5.1.0",
     "react-tiny-fab": "4.0.4",
-    "react-window": "^1.8.5",
+    "react-window": "^1.8.7",
     "recoil": "0.7.5",
     "regenerator-runtime": "0.13.9",
     "reselect": "4.1.6",

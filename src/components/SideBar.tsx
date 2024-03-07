@@ -104,7 +104,7 @@ function SideBar({apiConfig}) {
         ))}
       </div>
 
-      {/*<Reboot/>*/}
+      <Reboot/>
       <div className={s.footer}>
 
         <ThemeSwitcher />
